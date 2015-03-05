@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="PREF_STORENUMBER"
+        android:title="@string/store_number"
+        android:summary="@string/store_number_summary"
+        android:dialogTitle="@string/store_number"
+        android:inputType="number"
+        android:maxLength="4"/>
+    <EditTextPreference
+    android:key="PREF_NUMBER"
+    android:title="@string/phone_number"
+    android:summary="@string/phone_number_summary"
+    android:dialogTitle="@string/phone_number"
+    android:inputType="number"/>
+</PreferenceScreen>

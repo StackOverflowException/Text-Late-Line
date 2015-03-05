@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Text Late Line</string>
+    <string name="short_order_number">Customer:</string>
+    <string name="action_settings">Settings</string>
+    <string name="prefTitle">Settings</string>
+    <string name="send">Send Text</string>
+    <string name="phone_number">Phone number</string>
+    <string name="phone_number_summary">Late line phone number</string>
+    <string name="store_number">Store number</string>
+    <string name="store_number_summary">Your 4-digit store identifier</string>
+    <string name="trip_id">Trip ID:</string>
+    <string name="settings_prompt">Please set the store number and late line phone number</string>
+
+    <string-array name="reason_list">
+        <item>(No Reason)</item>
+        <item>Late Pick</item>
+        <item>Slow Traffic</item>
+        <item>Flat Tyre</item>
+        <item>Van Breakdown</item>
+        <item>Bad Weather</item>
+    </string-array>
+
+</resources>
