@@ -12,6 +12,8 @@
     <string name="store_number_summary">Your 4-digit store identifier</string>
     <string name="trip_id">Trip ID:</string>
     <string name="settings_prompt">Please set the store number and late line phone number</string>
+    <string name="arrival_time">Estimated arrival time:</string>
+    <string name="reason">Reason:</string>
 
     <string-array name="reason_list">
         <item>(No Reason)</item>

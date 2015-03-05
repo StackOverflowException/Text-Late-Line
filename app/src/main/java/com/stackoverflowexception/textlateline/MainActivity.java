@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Text Late Line");
         editShortOrderNumber = (EditText) findViewById(R.id.orderText);
         reasonSpinner = (Spinner) findViewById(R.id.reasonSpinner);
         editTripID = (EditText) findViewById(R.id.tripIDText);
