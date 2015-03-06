@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
 
     String lateLineNumber, storeNumber, tripID , ShortOrderNumber;
     String message, reasonText, arrivalTime, arrivalHour, arrivalMinute;
+    Integer customerID;
     EditText editShortOrderNumber, editTripID;
     Spinner reasonSpinner;
     TimePicker arrivalTimePicker;
@@ -34,6 +37,24 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setTitle("Text Late Line");
         editShortOrderNumber = (EditText) findViewById(R.id.orderText);
+        editShortOrderNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("PREF_SHORTORDERNUMBER",s.toString());
+                editor.commit();
+            }
+        });
         reasonSpinner = (Spinner) findViewById(R.id.reasonSpinner);
         editTripID = (EditText) findViewById(R.id.tripIDText);
         arrivalTimePicker = (TimePicker) findViewById(R.id.timePicker);
@@ -44,11 +65,27 @@ public class MainActivity extends ActionBarActivity {
         lateLineNumber = prefs.getString("PREF_NUMBER", "");
         storeNumber = prefs.getString("PREF_STORENUMBER", "");
         tripID = prefs.getString("PREF_TRIPID", "");
+        ShortOrderNumber = prefs.getString("PREF_SHORTORDERNUMBER", "");
+        editShortOrderNumber.setText(ShortOrderNumber);
         editTripID.setText(tripID);
         if(lateLineNumber.equals("") || storeNumber.equals("")) {
             Intent intent = new Intent(this, ShowSettings.class);
             this.startActivity(intent);
             Toast.makeText(this, getString(R.string.settings_prompt), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void prevClicked(View view) {
+        if(!(editShortOrderNumber.getText().toString().equals(""))) {
+            Integer customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
+            editShortOrderNumber.setText(Integer.toString(--customerID));
+        }
+    }
+
+    public void nextClicked(View view) {
+        if(!(editShortOrderNumber.getText().toString().equals(""))) {
+            Integer customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
+            editShortOrderNumber.setText(Integer.toString(++customerID));
         }
     }
 

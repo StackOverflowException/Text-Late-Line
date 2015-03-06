@@ -24,7 +24,7 @@
             />
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tripIDText"
             android:maxLength="2"
@@ -42,16 +42,31 @@
             android:text="@string/short_order_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"/>
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/previous"
+            android:id="@+id/buttonPrev"
+            android:onClick="prevClicked"
+            android:layout_weight="1"/>
 
         <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="number"
-            android:ems="10"
             android:maxLength="4"
             android:id="@+id/orderText"
-            android:layout_weight="0"/>
+            android:layout_weight="2"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:id="@+id/buttonNext"
+            android:onClick="nextClicked"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
