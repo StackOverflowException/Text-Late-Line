@@ -23,8 +23,7 @@ import java.util.Calendar;
 
 public class MainActivity extends ActionBarActivity {
 
-    private String lateLineNumber, storeNumber, tripID , ShortOrderNumber;
-    private String message, reasonText, arrivalTime, arrivalHour, arrivalMinute;
+    private String lateLineNumber, storeNumber, tripID , ShortOrderNumber, message;
     private Integer customerID;
     private EditText editShortOrderNumber, editTripID;
     private Spinner reasonSpinner;
@@ -115,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void sendSMS(View view){
-
+        String reasonText, arrivalTime, arrivalHour, arrivalMinute;
         tripID = editTripID.getText().toString();
         lateLineNumber = prefs.getString("PREF_NUMBER", "");
         storeNumber = prefs.getString("PREF_STORENUMBER", "");
