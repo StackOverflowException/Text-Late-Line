@@ -59,12 +59,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
-                    String str = editTripID.getText().toString().toUpperCase();
-                    if(!(str.length() == 2)){
+                    if(!(editTripID.getText().toString().length() == 2)){
                         editTripID.setText(tripID);
                         Toast.makeText(getBaseContext(), getString(R.string.trip_id_format), Toast.LENGTH_LONG).show();
                     }
-                    if (!(str.equals(tripID))) {
+                    String str = editTripID.getText().toString().toUpperCase();
                         if (!Character.isDigit(str.charAt(0)) || !Character.isLetter(str.charAt(1))) {
                             editTripID.setText(tripID);
                             Toast.makeText(getBaseContext(), getString(R.string.trip_id_format), Toast.LENGTH_LONG).show();
@@ -75,7 +74,6 @@ public class MainActivity extends ActionBarActivity {
                             editor.putString("PREF_TRIPID", tripID);
                             editor.commit();
                         }
-                    }
                 }
             }
         });
