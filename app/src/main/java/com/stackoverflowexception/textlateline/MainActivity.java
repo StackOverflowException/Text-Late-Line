@@ -23,13 +23,13 @@ import java.util.Calendar;
 
 public class MainActivity extends ActionBarActivity {
 
-    String lateLineNumber, storeNumber, tripID , ShortOrderNumber;
-    String message, reasonText, arrivalTime, arrivalHour, arrivalMinute;
-    Integer customerID;
-    EditText editShortOrderNumber, editTripID;
-    Spinner reasonSpinner;
-    TimePicker arrivalTimePicker;
-    SharedPreferences prefs;
+    private String lateLineNumber, storeNumber, tripID , ShortOrderNumber;
+    private String message, reasonText, arrivalTime, arrivalHour, arrivalMinute;
+    private Integer customerID;
+    private EditText editShortOrderNumber, editTripID;
+    private Spinner reasonSpinner;
+    private TimePicker arrivalTimePicker;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,37 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("PREF_SHORTORDERNUMBER",s.toString());
+                editor.putString("PREF_SHORTORDERNUMBER", s.toString());
                 editor.commit();
             }
         });
-        reasonSpinner = (Spinner) findViewById(R.id.reasonSpinner);
         editTripID = (EditText) findViewById(R.id.tripIDText);
+        editTripID.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    String str = editTripID.getText().toString().toUpperCase();
+                    if(!(str.length() == 2)){
+                        editTripID.setText(tripID);
+                        Toast.makeText(getBaseContext(), getString(R.string.trip_id_format), Toast.LENGTH_LONG).show();
+                    }
+                    if (!(str.equals(tripID))) {
+                        if (!Character.isDigit(str.charAt(0)) || !Character.isLetter(str.charAt(1))) {
+                            editTripID.setText(tripID);
+                            Toast.makeText(getBaseContext(), getString(R.string.trip_id_format), Toast.LENGTH_LONG).show();
+                        } else {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editTripID.setText(str);
+                            tripID = str;
+                            editor.putString("PREF_TRIPID", tripID);
+                            editor.commit();
+                        }
+                    }
+                }
+            }
+        });
+
+        reasonSpinner = (Spinner) findViewById(R.id.reasonSpinner);
         arrivalTimePicker = (TimePicker) findViewById(R.id.timePicker);
         arrivalTimePicker.setIs24HourView(true);
         arrivalTimePicker.setCurrentHour((Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + 1));
@@ -68,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
         ShortOrderNumber = prefs.getString("PREF_SHORTORDERNUMBER", "");
         editShortOrderNumber.setText(ShortOrderNumber);
         editTripID.setText(tripID);
-        if(lateLineNumber.equals("") || storeNumber.equals("")) {
+        if(!(prefs.contains("PREF_NUMBER")) || !(prefs.contains("PREF_STORENUMBER"))) {
             Intent intent = new Intent(this, ShowSettings.class);
             this.startActivity(intent);
             Toast.makeText(this, getString(R.string.settings_prompt), Toast.LENGTH_LONG).show();
@@ -77,15 +102,15 @@ public class MainActivity extends ActionBarActivity {
 
     public void prevClicked(View view) {
         if(!(editShortOrderNumber.getText().toString().equals(""))) {
-            Integer customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
-            editShortOrderNumber.setText(Integer.toString(--customerID));
+            customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
+            editShortOrderNumber.setText((--customerID).toString());
         }
     }
 
     public void nextClicked(View view) {
         if(!(editShortOrderNumber.getText().toString().equals(""))) {
-            Integer customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
-            editShortOrderNumber.setText(Integer.toString(++customerID));
+            customerID = Integer.parseInt(editShortOrderNumber.getText().toString());
+            editShortOrderNumber.setText((++customerID).toString());
         }
     }
 
@@ -100,10 +125,10 @@ public class MainActivity extends ActionBarActivity {
         ShortOrderNumber = editShortOrderNumber.getText().toString();
         reasonText = (String) reasonSpinner.getSelectedItem();
         if(reasonText.equals("(No Reason)")) reasonText = "";
-        arrivalHour   = Integer.toString(arrivalTimePicker.getCurrentHour());
-        arrivalMinute = Integer.toString(arrivalTimePicker.getCurrentMinute());
-        arrivalTime = String.format("%s:%s",arrivalHour,arrivalMinute);
-        message = String.format("%s %s %s %s %s",storeNumber,tripID,ShortOrderNumber,arrivalTime,reasonText);
+        arrivalHour   = arrivalTimePicker.getCurrentHour().toString();
+        arrivalMinute = arrivalTimePicker.getCurrentMinute().toString();
+        arrivalTime = String.format("%s:%s", arrivalHour, arrivalMinute);
+        message = String.format("%s %s %s %s %s", storeNumber, tripID, ShortOrderNumber, arrivalTime, reasonText);
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(String.format("Send text message:\n%s", message));

@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tripIDText"
             android:maxLength="2"
+            android:inputType="textCapCharacters"
             android:layout_weight="0"/>
 
     </LinearLayout>
